@@ -1,0 +1,16 @@
+<!--base.html 가져오기, 앞에서 함-->
+{% extends 'base.html' %}
+<!--블록 시작, 앞에서 함-->
+{% block content %}
+<div class="container">
+<!--    페이지 상단에 제목 표시-->
+    <h5 class="my-3 border-bottom pb-2">질문 등록</h5>
+<!--    action 속성의 url을 생략-->
+    <form method="post">
+        {% csrf_token %}
+<!--        QuestionForm 에 정의된 subject, content를 p 태그로 출력-->
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">저장하기</button>
+    </form>
+</div>
+{% endblock %}

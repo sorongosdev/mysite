@@ -23,4 +23,4 @@ def answer_create(request,  question_id):
 
 def question_create(request):
     form = QuestionForm()
-    return render(request, 'pybo/quesion_form.html',{'form':form})
+    return render(request, 'pybo/question_form.html',{'form':form})
