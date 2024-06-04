@@ -1,0 +1,2 @@
+# mysite
+ django web class
