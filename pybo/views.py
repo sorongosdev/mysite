@@ -22,5 +22,16 @@ def answer_create(request,  question_id):
     return redirect('pybo:detail',  question_id=question.id)
 
 def question_create(request):
-    form = QuestionForm()
-    return render(request, 'pybo/question_form.html',{'form':form})
+    if request.method == 'POST':    # 요청이 post 방식이면
+        form = QuestionForm(request.POST)
+        if form.is_valid():     # 폼이 유효하다면
+            # commit 없이 form.save()를 수행하면 Question 모델의 create_date에 값이 설정되지 않아 오류가 발생할 것임
+            # 임시 저장하여 question 객체를 리턴
+            question = form.save(commit=False)
+            question.create_date = timezone.now()   # 실제 저장을 위해 작성일시를 설정
+            question.save()     # 실제로 데이터를 저장
+            return redirect('pybo:index')   # pybo:index 로 이동, 실주소는 .../pybo/
+    else:   # 요청이 post 방식이 아니라 get 방식이면
+        form = QuestionForm()
+    context = {'form': form}
+    return render(request, 'pybo/question_form.html',context)
